@@ -6,3 +6,17 @@
 - Ingest data from an external file (i.e. csv, txt, etc.)
   - Change output file name based on input
 - Output format options
+  - Terminal output (ASCII)
+  - Image output (PNG and SVG)
+    - Dimensions
+    - Quality
+- Supported data
+  - URL
+  - Text
+  - VCard/iCal
+    - Phone number
+    - Email address
+    - Calendar events
+  - WIFI info
+  - Image (maybe)
+- Autodetect the incoming data format is a nice to have
