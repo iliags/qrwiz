@@ -7,7 +7,7 @@ pub enum ImageFormat {
     SVG,
 }
 
-/// Re-export of QrCodeEcc from `qrcode-generator`
+/// Re-export of QrCodeEcc from `qrcode-generator` for use with `ValueEnum`
 #[derive(Debug, Copy, Clone, PartialEq, ValueEnum)]
 pub enum QrEcc {
     /// The QR Code can tolerate about  7% erroneous codewords.
@@ -32,18 +32,25 @@ impl From<QrEcc> for QrCodeEcc {
 }
 
 #[derive(Args, Debug)]
-#[group(multiple = false)]
+#[group(multiple = true)]
 pub struct Output {
     /// The image size of the QR code
-    // TODO: Write a custom validator to calculate power of 2
     #[arg(short, long, default_value = "128")]
     pub size: usize,
 
     /// The output format of the QR code
     #[arg(short, long, value_enum, default_value_t = ImageFormat::PNG)]
-    pub format: ImageFormat,
+    pub image_format: ImageFormat,
 
     /// The error correction level of the QR code
     #[arg(short, long, value_enum, default_value_t = QrEcc::Low)]
     pub ecc: QrEcc,
+
+    /// The output file name of the QR code. If not provided, the input file name will be used.
+    #[arg(short, long)]
+    pub name: Option<String>,
+
+    /// The output directory of the QR code. If not provided, the input file name will be used.
+    #[arg(short, long)]
+    pub dir: Option<String>,
 }
