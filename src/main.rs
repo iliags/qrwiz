@@ -6,6 +6,15 @@ fn main() {
 
     println!("{:?}", config);
 
+    match config.config_file {
+        Some(file) => {
+            println!("Config file: {}", file);
+        }
+        None => {
+            println!("No config file specified");
+        }
+    }
+
     /*
     use qrcode_generator::QrCodeEcc;
     std::fs::create_dir_all("test_output").unwrap_or_else(|e| {
