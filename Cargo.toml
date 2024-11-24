@@ -11,3 +11,9 @@ publish = false
 qrcode-generator = "5"
 clap = "4.5"
 toml = "0.8"
+
+# TODO: These crates have partial implementations and will probably need some work.
+#vcard = "0.4.13"
+#ical = "0.11.0"
+
+url = "2.5"
