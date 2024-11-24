@@ -6,37 +6,40 @@ fn main() {
 
     println!("{:?}", config);
 
-    match config.config_file {
-        Some(file) => {
-            println!("Config file: {}", file);
-        }
-        None => {
-            println!("No config file specified");
-        }
-    }
-
-    /*
-    use qrcode_generator::QrCodeEcc;
     std::fs::create_dir_all("test_output").unwrap_or_else(|e| {
         eprintln!("Error creating test directory: {}", e);
         std::process::exit(1);
     });
 
-    let result = qrcode_generator::to_png_to_file(
-        "Hello world!",
-        QrCodeEcc::Low,
-        128,
-        "test_output/file_output.png",
-    );
+    if !config.urls.is_empty() {
+        for (url, index) in config.urls.into_iter().zip(1..) {
+            println!("Generating QR code for URL: {}", url.as_str());
 
-    match result {
-        Ok(_) => {
-            println!("QR code generated successfully!");
-        }
-        Err(e) => {
-            eprintln!("Error: {}", e);
-            std::process::exit(1);
+            let name = url.domain().unwrap_or_else(|| {
+                eprintln!("Error: URL does not have a domain");
+                std::process::exit(1);
+            });
+
+            //println!("Domain: {}", name);
+
+            let output_file = format!("test_output/{}_{}.png", name, index);
+
+            let result = qrcode_generator::to_png_to_file(
+                url.as_str(),
+                config.output.ecc.into(),
+                config.output.size,
+                output_file,
+            );
+
+            match result {
+                Ok(_) => {
+                    println!("QR code generated successfully!");
+                }
+                Err(e) => {
+                    eprintln!("Error: {}", e);
+                    std::process::exit(1);
+                }
+            }
         }
     }
-     */
 }
