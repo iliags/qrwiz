@@ -1,6 +1,13 @@
-use qrcode_generator::QrCodeEcc;
+use clap::Parser;
+use qrwiz::config::Config;
 
 fn main() {
+    let config = Config::parse();
+
+    println!("{:?}", config);
+
+    /*
+    use qrcode_generator::QrCodeEcc;
     std::fs::create_dir_all("test_output").unwrap_or_else(|e| {
         eprintln!("Error creating test directory: {}", e);
         std::process::exit(1);
@@ -14,10 +21,13 @@ fn main() {
     );
 
     match result {
-        Ok(_) => println!("QR code generated successfully!"),
+        Ok(_) => {
+            println!("QR code generated successfully!");
+        }
         Err(e) => {
             eprintln!("Error: {}", e);
             std::process::exit(1);
         }
     }
+     */
 }
