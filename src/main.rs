@@ -9,7 +9,7 @@ fn main() {
     let result = qrcode_generator::to_png_to_file(
         "Hello world!",
         QrCodeEcc::Low,
-        1024,
+        128,
         "test_output/file_output.png",
     );
 
