@@ -39,7 +39,7 @@ pub struct Output {
     pub size: usize,
 
     /// The output format of the QR code
-    #[arg(short, long, value_enum, default_value_t = ImageFormat::PNG)]
+    #[arg(short, long, value_enum, default_value_t = ImageFormat::SVG)]
     pub image_format: ImageFormat,
 
     /// The error correction level of the QR code
