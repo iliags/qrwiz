@@ -1,33 +1,29 @@
 use clap::Parser;
 use output::Output;
-use std::{ffi::OsStr, path::PathBuf};
+//use std::{ffi::OsStr, path::PathBuf};
 use url::Url;
 
-pub mod input;
 pub mod output;
 
 /// QR code generator configuration
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 pub struct Config {
-    /// List of files to convert
-    // TODO: Add CSV support
-    #[clap(short, long, value_parser, num_args = 0.., value_delimiter = ' ')]
-    pub files: Vec<String>,
-
     /// List of URLs to convert
     #[clap(short, long, value_parser, num_args = 0.., value_delimiter = ' ', value_parser=validate_url)]
     pub urls: Vec<Url>,
 
+    /*
     /// The configuration file to use
     #[arg(short, long, value_parser=validate_toml)]
     pub config_file: Option<String>,
-
+     */
     /// The output configuration
     #[command(flatten)]
     pub output: Output,
 }
 
+/*
 fn validate_toml(value: &str) -> Result<String, String> {
     let path = PathBuf::from(value);
     if path.extension() != Some(OsStr::new("toml")) {
@@ -36,6 +32,7 @@ fn validate_toml(value: &str) -> Result<String, String> {
 
     Ok(value.to_string())
 }
+*/
 
 fn validate_url(value: &str) -> Result<Url, String> {
     // TODO: Validate the URL instead of trusting user input

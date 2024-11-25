@@ -4,20 +4,13 @@
   - If a web app is made, multiple files need to be compressed.
   - The UI should be able to save current settings as a config file.
 - Support a TOML config file
-- Ingest data from an external file (i.e. csv, txt, etc.)
+- Ingest data from an external file (i.e. csv etc.)
   - Change output file name based on input
-- Output format options
-  - Terminal output (ASCII)
-  - Image output (PNG and SVG)
-    - Dimensions
-    - Quality
 - Supported data
-  - URL
+  - ~~URL~~
   - Text
   - VCard/iCal
     - Phone number
     - Email address
     - Calendar events
   - WIFI info
-  - Image (maybe)
-- Autodetect the incoming data format is a nice to have
