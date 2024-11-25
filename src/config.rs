@@ -1,10 +1,20 @@
-use clap::{Args, ValueEnum};
+use clap::{Args, Parser, ValueEnum};
 use qrcode_generator::QrCodeEcc;
+use url::Url;
 
 #[derive(Debug, Copy, Clone, PartialEq, ValueEnum)]
 pub enum ImageFormat {
     PNG,
     SVG,
+}
+
+impl ImageFormat {
+    pub fn extension(&self) -> &'static str {
+        match self {
+            ImageFormat::PNG => "png",
+            ImageFormat::SVG => "svg",
+        }
+    }
 }
 
 /// Re-export of QrCodeEcc from `qrcode-generator` for use with `ValueEnum`
@@ -28,6 +38,35 @@ impl From<QrEcc> for QrCodeEcc {
             QrEcc::Quartile => QrCodeEcc::Quartile,
             QrEcc::High => QrCodeEcc::High,
         }
+    }
+}
+
+/// QR code generator configuration
+#[derive(Parser, Debug)]
+#[command(version, about, long_about = None)]
+pub struct Config {
+    /// List of URLs to convert
+    #[clap(short, long, value_parser, num_args = 0.., value_delimiter = ' ', value_parser=validate_url)]
+    pub urls: Vec<Url>,
+
+    /// The output configuration
+    #[command(flatten)]
+    pub output: Output,
+}
+
+fn validate_url(value: &str) -> Result<Url, String> {
+    // TODO: Validate the URL instead of trusting user input
+    if value.starts_with("http://") || value.starts_with("https://") {
+        match Url::parse(value) {
+            Ok(url) if url.scheme() == "http" || url.scheme() == "https" => return Ok(url),
+            _ => return Err("URL is not valid".to_string()),
+        }
+    }
+
+    let prefixed_value = "https://".to_string() + value;
+    match Url::parse(&prefixed_value) {
+        Ok(url) => Ok(url),
+        Err(e) => Err(e.to_string()),
     }
 }
 

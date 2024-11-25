@@ -4,16 +4,9 @@ use qrwiz::{config::Config, OutputData};
 fn main() {
     let config = Config::parse();
 
-    //println!("{:?}", config);
-
     let directory = match config.output.dir {
         Some(dir) => dir,
         None => ".".to_string(),
-    };
-
-    let extension = match config.output.image_format {
-        qrwiz::config::output::ImageFormat::PNG => "png",
-        qrwiz::config::output::ImageFormat::SVG => "svg",
     };
 
     // Container to hold the output data
@@ -41,7 +34,13 @@ fn main() {
                     .to_string(),
             };
 
-            let output_file = format!("{}/{}_{}.{}", directory, name, index, extension);
+            let output_file = format!(
+                "{}/{}_{}.{}",
+                directory,
+                name,
+                index,
+                config.output.image_format.extension()
+            );
 
             println!("Output file: {}", output_file);
 
@@ -55,13 +54,13 @@ fn main() {
     // Generate the QR codes
     for output in output_data {
         let result = match config.output.image_format {
-            qrwiz::config::output::ImageFormat::PNG => qrcode_generator::to_png_to_file(
+            qrwiz::config::ImageFormat::PNG => qrcode_generator::to_png_to_file(
                 output.data,
                 config.output.ecc.into(),
                 config.output.size,
                 &output.output_file,
             ),
-            qrwiz::config::output::ImageFormat::SVG => qrcode_generator::to_svg_to_file(
+            qrwiz::config::ImageFormat::SVG => qrcode_generator::to_svg_to_file(
                 output.data,
                 config.output.ecc.into(),
                 config.output.size,

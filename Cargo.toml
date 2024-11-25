@@ -10,7 +10,6 @@ publish = false
 [dependencies]
 qrcode-generator = "5"                            # QR code tooling
 clap = { version = "4.5", features = ["derive"] } # CLI app tooling
-toml = "0.8"                                      # TOML for config files
 url = "2.5"                                       # URL verification
 
 # TODO: These crates have partial implementations and will probably need some work.
